@@ -36,7 +36,7 @@ public class EditServlet extends HttpServlet {
         // 該当IDのタスク1件のデータをDBから取得
         Task t = em.find(Task.class, Integer.parseInt(request.getParameter("id")));
 
-        // DB切断
+        // DBを閉じる
         em.close();
 
         // タスク情報とセッションIDをリクエストスコープに登録
@@ -48,6 +48,7 @@ public class EditServlet extends HttpServlet {
             request.getSession().setAttribute("message_id", t.getId());
         }
 
+        // 遷移先のファイルを指定して表示
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/edit.jsp");
         rd.forward(request, response);
     }

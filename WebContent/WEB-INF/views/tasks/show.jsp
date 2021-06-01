@@ -25,22 +25,14 @@
                  </tbody>
                  </table>
 
-                <p><a href="#" onclick="confirmDestroy();">【タスク完了！】</a></p>
                 <p><a href="${pageContext.request.contextPath}/edit?id=${task.id}" >タスクを編集する</a></p>
                 <p><a href="${pageContext.request.contextPath}/index" >一覧に戻る</a></p>
-
-                <script>
-                function confirmDestroy(){
-                    if(confirm("おつかれさまです！ タスクを削除してよろしいですか？")){
-                          document.forms[1].submit();
-                    }
-                }
-                </script>
-
             </c:when>
+
             <c:otherwise>
                 <h2>タスクが見つかりませんでした</h2>
             </c:otherwise>
+
         </c:choose>
     </c:param>
 </c:import>
