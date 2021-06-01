@@ -26,6 +26,7 @@
                  </table>
 
                 <p><a href="${pageContext.request.contextPath}/edit?id=${task.id}" >タスクを編集する</a></p>
+                <br />
                 <p><a href="${pageContext.request.contextPath}/index" >一覧に戻る</a></p>
             </c:when>
 
