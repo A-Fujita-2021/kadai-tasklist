@@ -17,7 +17,7 @@
                 </form>
                 <script>
                 function confirmDestroy(){
-                    if(confirm"おつかれさまです！ タスクを削除してよろしいですか？")){
+                    if(confirm("おつかれさまです！ タスクを削除してよろしいですか？")){
                            document.forms[1].submit();
                     }
                 }
