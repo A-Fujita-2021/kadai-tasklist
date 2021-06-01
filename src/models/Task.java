@@ -7,11 +7,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 // DTO(DB内データと変数名の照合)、テーブルの作成
 
 @Entity
+@NamedQueries({     // 一覧表示するデータを取得するためのJPQL
+    @NamedQuery(
+        name = "getAllTasks",
+        query = "SELECT t From Task AS t ORDER BY t.id"
+    ),
+    @NamedQuery(
+        name = "getTasksCount",
+        query = "SELECT COUNT(t) FROM Task AS t"
+    )
+})
+
+
 @Table(name = "tasks")
 public class Task {
 
