@@ -15,6 +15,6 @@
             </c:forEach>
         </ul>
         <br />
-        <p><a href="${pageContent.request.contextPath}/new">新しいタスクを作成</a></p>
+        <p><a href="${pageContext.request.contextPath}/new">新しいタスクを作成</a></p>
     </c:param>
 </c:import>

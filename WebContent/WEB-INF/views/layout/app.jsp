@@ -13,6 +13,7 @@
             <div id="content">
                 ${param.content}
             </div>
+            <br />
             <div id="footer">
                 by Ayaka Fujita.
             </div>
