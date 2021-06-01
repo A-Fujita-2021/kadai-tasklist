@@ -8,7 +8,7 @@
     <body>
         <div id="wrapper">
             <div id="header">
-                <h1>タスクリスト　～がんばってえらい～</h1>
+                <h1>タスクリスト　～がんばっててえらい～</h1>
             </div>
             <div id="content">
                 ${param.content}
