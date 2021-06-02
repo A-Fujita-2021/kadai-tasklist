@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <label>タスク
-    <input type="text" name="task" value="${task.task}" />
+    <input type="text" name="content" value="${task.content}" />
 </label>
 
 <br /><br />

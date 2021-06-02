@@ -43,8 +43,8 @@ public class CreateServlet extends HttpServlet {
 
 
             // tの各フィールドにデータを入力
-            String task = request.getParameter("task");
-            t.setTask(task);    //タスク
+            String content = request.getParameter("content");
+            t.setContent(content);    //タスク
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             t.setCreated_at(currentTime);   //作成日時
@@ -56,6 +56,9 @@ public class CreateServlet extends HttpServlet {
             em.persist(t);
             em.getTransaction().commit();
             em.close();
+
+            // フラッシュメッセージをリクエストスコープへ格納
+            request.getSession().setAttribute("flush", "タスクを登録しました！ がんばりましょう！");
 
             // 遷移先のファイルを指定して開く(リダイレクト)
             response.sendRedirect(request.getContextPath() + "/index");

@@ -40,8 +40,8 @@ public class UpdateServlet extends HttpServlet {
            Task t = em.find(Task.class, (Integer)(request.getSession().getAttribute("message_id")));
 
            // フォームの内容を各フィールドに上書き
-           String task =request.getParameter("task");
-           t.setTask(task);
+           String content =request.getParameter("content");
+           t.setContent(content);
 
            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
            t.setUpdated_at(currentTime);
@@ -50,6 +50,9 @@ public class UpdateServlet extends HttpServlet {
            em.getTransaction().begin();
            em.getTransaction().commit();
            em.close();
+
+           // フラッシュメッセージをリクエストスコープへ格納
+           request.getSession().setAttribute("flush", "タスクを変更しました！ 休憩も大事！");
 
            // セッションスコープ上の不要になったデータを削除
            request.getSession().removeAttribute("message_id");

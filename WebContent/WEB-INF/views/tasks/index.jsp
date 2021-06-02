@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="../layout/app.jsp">
     <c:param name="content">
+        <c:if test="${flush != null}">
+            <div id="flush_success">
+                <c:out value="${flush}" />
+            </div>
+        </c:if>
         <h2>タスク一覧</h2>
         <ul>
             <c:forEach var="task" items="${tasks}">
@@ -10,7 +15,7 @@
                     <a href="${pageContext.request.contextPath}/show?id=${task.id}">
                         <c:out value="${task.id}" />
                     </a>
-                    ： <c:out value="${task.task}" />
+                    ： <c:out value="${task.content}" />
                 </li>
             </c:forEach>
         </ul>

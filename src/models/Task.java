@@ -36,8 +36,8 @@ public class Task {
     private Integer id;
 
     // タスク名
-    @Column(name = "task", length = 100, nullable = false)
-    private String task;
+    @Column(name = "content", length = 100, nullable = false)
+    private String content;
 
     // タスクの作成日時
     @Column(name="created_at", nullable = false)
@@ -55,12 +55,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getTask() {
-        return task;
+    public String getContent() {
+        return content;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Timestamp getCreated_at() {
