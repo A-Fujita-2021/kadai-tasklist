@@ -31,7 +31,7 @@ public class DestroyServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String _token = request.getParameter("_token");
-        if(_token != null){
+        if(_token != null &&_token.equals(request.getSession().getId())){
             EntityManager em = DBUtil.createEntityManager();
 
             // セッションスコープからタスクのIDを取得して、該当IDのタスク1件のみをDBから取得

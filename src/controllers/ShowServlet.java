@@ -43,7 +43,7 @@ public class ShowServlet extends HttpServlet {
         request.setAttribute("task", t);
 
         // 遷移先のファイルを指定して表示
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/show.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/show.jsp");
         rd.forward(request, response);
     }
 }

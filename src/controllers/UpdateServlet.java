@@ -2,8 +2,10 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Task;
+import models.validators.TaskValidator;
 import utils.DBUtil;
 
 /**
@@ -33,10 +36,10 @@ public class UpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String _token = request.getParameter("_token");
         if(_token != null){
-            EntityManager em = DBUtil.createEntityManager();
+           EntityManager em = DBUtil.createEntityManager();
 
-            // セッションスコープからタスクIDを取得して
-            // 該当するタスク1件のみをDBから取得
+           // セッションスコープからタスクIDを取得して
+           // 該当するタスク1件のみをDBから取得
            Task t = em.find(Task.class, (Integer)(request.getSession().getAttribute("message_id")));
 
            // フォームの内容を各フィールドに上書き
@@ -46,19 +49,35 @@ public class UpdateServlet extends HttpServlet {
            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
            t.setUpdated_at(currentTime);
 
-           // DBを更新して切断
-           em.getTransaction().begin();
-           em.getTransaction().commit();
-           em.close();
+           // バリデーションを実行してエラーがあったら編集画面のフォームに戻る
+           List<String> errors = TaskValidator.validate(t);
+           if(errors.size() >0){
+               em.close();
 
-           // フラッシュメッセージをセッションスコープへ格納
-           request.getSession().setAttribute("flush", "タスクを変更しました！ 休憩も大事！");
+               // フォームに初期値を設定してエラーメッセージを送る
+               request.setAttribute("_token", request.getSession().getId());
+               request.setAttribute("task", t);
+               request.setAttribute("errors",  errors);
 
-           // セッションスコープ上の不要になったデータを削除
-           request.getSession().removeAttribute("message_id");
+               RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
+               rd.forward(request, response);
 
-           // 一覧ページへリダイレクト
-           response.sendRedirect(request.getContextPath() + "/index");
+           // エラーがなければDBを更新して切断
+           } else {
+
+               em.getTransaction().begin();
+               em.getTransaction().commit();
+               em.close();
+
+               // フラッシュメッセージをセッションスコープへ格納
+               request.getSession().setAttribute("flush", "タスクを変更しました！ 休憩も大事！");
+
+               // セッションスコープ上の不要になったデータを削除
+               request.getSession().removeAttribute("message_id");
+
+               // 一覧ページへリダイレクト
+               response.sendRedirect(request.getContextPath() + "/index");
+           }
         }
     }
 }

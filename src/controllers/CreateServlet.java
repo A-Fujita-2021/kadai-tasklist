@@ -2,8 +2,10 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Task;
+import models.validators.TaskValidator;
 import utils.DBUtil;
 
 /**
@@ -41,7 +44,6 @@ public class CreateServlet extends HttpServlet {
             // タスクのインスタンスを作成
             Task t = new Task();
 
-
             // tの各フィールドにデータを入力
             String content = request.getParameter("content");
             t.setContent(content);    //タスク
@@ -50,18 +52,33 @@ public class CreateServlet extends HttpServlet {
             t.setCreated_at(currentTime);   //作成日時
             t.setUpdated_at(currentTime);   //更新日時
 
+            // バリデーションを実行してエラーがあれば新規登録のフォームに戻る
+            List<String> errors = TaskValidator.validate(t);
+            if(errors.size() >0){
+                em.close();
 
-            // データベースへ接続、データを保存、切断
-            em.getTransaction().begin();
-            em.persist(t);
-            em.getTransaction().commit();
-            em.close();
+                // フォームに初期値を設定、さらにエラーメッセージを送る
+                request.setAttribute("_token",  request.getSession().getId());
+                request.setAttribute("task", t);
+                request.setAttribute("errors", errors);
 
-            // フラッシュメッセージをセッションスコープへ格納
-            request.getSession().setAttribute("flush", "タスクを登録しました！ がんばりましょう！");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
+                rd.forward(request,  response);
 
-            // 遷移先のファイルを指定して開く(リダイレクト)
-            response.sendRedirect(request.getContextPath() + "/index");
+
+            // エラーがなければデータベースへ接続、データを保存、切断
+            }else{
+                em.getTransaction().begin();
+                em.persist(t);
+                em.getTransaction().commit();
+                em.close();
+
+                // フラッシュメッセージをセッションスコープへ格納
+                request.getSession().setAttribute("flush", "タスクを登録しました！ がんばりましょう！");
+
+                // 遷移先のファイルを指定して開く(リダイレクト)
+                response.sendRedirect(request.getContextPath() + "/index");
+            }
         }
     }
 }

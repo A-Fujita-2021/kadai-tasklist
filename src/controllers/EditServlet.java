@@ -49,7 +49,7 @@ public class EditServlet extends HttpServlet {
         }
 
         // 遷移先のファイルを指定して表示
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/edit.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/edit.jsp");
         rd.forward(request, response);
     }
 
