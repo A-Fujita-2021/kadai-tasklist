@@ -11,7 +11,7 @@
     <body>
         <div id="wrapper">
             <div id="header">
-                <h1>タスクリスト　～がんばっててえらい～</h1>
+                <h1>タスクリスト</h1>
             </div>
             <div id="content">
                 ${param.content}
