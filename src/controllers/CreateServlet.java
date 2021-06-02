@@ -57,7 +57,7 @@ public class CreateServlet extends HttpServlet {
             em.getTransaction().commit();
             em.close();
 
-            // フラッシュメッセージをリクエストスコープへ格納
+            // フラッシュメッセージをセッションスコープへ格納
             request.getSession().setAttribute("flush", "タスクを登録しました！ がんばりましょう！");
 
             // 遷移先のファイルを指定して開く(リダイレクト)

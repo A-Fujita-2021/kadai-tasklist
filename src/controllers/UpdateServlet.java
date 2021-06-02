@@ -51,7 +51,7 @@ public class UpdateServlet extends HttpServlet {
            em.getTransaction().commit();
            em.close();
 
-           // フラッシュメッセージをリクエストスコープへ格納
+           // フラッシュメッセージをセッションスコープへ格納
            request.getSession().setAttribute("flush", "タスクを変更しました！ 休憩も大事！");
 
            // セッションスコープ上の不要になったデータを削除

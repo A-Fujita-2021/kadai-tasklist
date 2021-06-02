@@ -46,7 +46,7 @@ public class DestroyServlet extends HttpServlet {
             // セッションスコープ上の不要になったデータを削除
             request.getSession().removeAttribute("message_id");
 
-            // フラッシュメッセージをリクエストスコープへ格納
+            // フラッシュメッセージをセッションスコープへ格納
             request.getSession().setAttribute("flush", "タスクを完了しました！ おつかれさまです！！");
 
             // 一覧ページへリダイレクト
